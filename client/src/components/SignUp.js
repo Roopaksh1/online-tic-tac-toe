@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { API_CLIENT } from "../shared/services/api_client";
 
-const SignUp = () => {
+const SignUp = ({ setToken }) => {
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState("");
   const signUp = async () => {
@@ -16,6 +16,9 @@ const SignUp = () => {
     } else {
       const result = await API_CLIENT.post(process.env.REACT_APP_SIGNUP, user);
       setMessage(result.data.message);
+      if (result.data.message === "Registered.") {
+        setToken({...user, token: true});
+      }
     }
   };
 

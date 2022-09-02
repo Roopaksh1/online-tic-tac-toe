@@ -1,12 +1,12 @@
 const { default: Login } = require("../components/Login");
 const { default: SignUp } = require("../components/SignUp");
 
-const LoginScreen = () => {
+const LoginScreen = ({ setToken }) => {
   return (
     <>
       <h1>TIC TAC TOE</h1>
-      <Login/>
-      <SignUp/>
+      <Login setToken={ setToken }/>
+      <SignUp setToken={ setToken }/>
     </>
   );
 }

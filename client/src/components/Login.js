@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { API_CLIENT } from "../shared/services/api_client";
 
-const Login = () => {
+const Login = ({ setToken }) => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -14,6 +14,7 @@ const Login = () => {
       if (result.data.flag === 1) {
         if (result.data.doc.password === password) {
           setMessage(`Welcome ${result.data.doc.firstname}`);
+          setToken({...result.data.doc, token: true});
         } else {
           setMessage("Incorrect password.")
         }
