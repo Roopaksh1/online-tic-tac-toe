@@ -5,9 +5,8 @@ module.exports = {
     const userObject = request.body;
     userOperations.read(userObject, response);
   },
-  register(request, response) {
+  signup(request, response) {
     const userObject = request.body;
     userOperations.add(userObject, response);
-  },
-  profile(request, response) {},
+  }
 };

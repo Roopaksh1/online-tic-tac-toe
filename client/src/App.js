@@ -1,8 +1,12 @@
-import './App.css';
-import Login from './modules/user/pages/Login';
+import "./App.css";
+import LoginScreen from "./pages/LoginScreen";
 
 function App() {
-  return <Login/>;
+  return (
+    <>
+      <LoginScreen/>
+    </>
+  );
 }
 
 export default App;
