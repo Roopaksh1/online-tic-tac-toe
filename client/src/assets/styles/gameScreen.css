@@ -1,0 +1,43 @@
+.game-screen{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.board {
+  width: 60rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.board div {
+  width: 20rem;
+  height: 20rem;
+  background-color: #edf2f4;
+  border: black solid 1px;
+  box-sizing: border-box;
+  font-size: 10rem;
+  text-align: center;
+  line-height: 20rem;
+  cursor: context-menu;
+}
+
+.board div:hover {
+  background-color: #e5e5e5;
+}
+
+.logout {
+  background-color: #bde0fe;
+  cursor: pointer;
+  font-size: 2rem;
+  padding: 1rem;
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+
+.logout:active {
+  background-color: #a2d2ff;
+}
