@@ -1,5 +1,6 @@
-const { default: Login } = require("../components/Login");
-const { default: SignUp } = require("../components/SignUp");
+import "../assets/styles/loginScreen.css";
+import Login from "../components/Login";
+import SignUp from "../components/SignUp";
 
 const LoginScreen = ({ setToken }) => {
   return (
