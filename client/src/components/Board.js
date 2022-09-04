@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 
-const Board = ({ setResult }) => {
+const Board = ({ setResult, socket, player }) => {
   const [board, setBoard] = useState(["", "", "", "", "", "", "", "", ""]);
   const [turn, setTurn] = useState("X");
+  const [message, setMessage] = useState("Your turn");
+
   useEffect(() => {
     checkWinner();
     checkIfTie();
@@ -49,78 +51,93 @@ const Board = ({ setResult }) => {
     }
   };
 
-  const displayChoice = (e) => {
+  const displayChoice = (index, choice) => {
     const arr = [...board];
-    switch (e.target.className) {
+    switch (index) {
       case "square-one":
-        arr[0] = turn;
+        arr[0] = choice;
         setBoard(arr);
         break;
       case "square-two":
-        arr[1] = turn;
+        arr[1] = choice;
         setBoard(arr);
         break;
       case "square-three":
-        arr[2] = turn;
+        arr[2] = choice;
         setBoard(arr);
         break;
       case "square-four":
-        arr[3] = turn;
+        arr[3] = choice;
         setBoard(arr);
         break;
       case "square-five":
-        arr[4] = turn;
+        arr[4] = choice;
         setBoard(arr);
         break;
       case "square-six":
-        arr[5] = turn;
+        arr[5] = choice;
         setBoard(arr);
         break;
       case "square-seven":
-        arr[6] = turn;
+        arr[6] = choice;
         setBoard(arr);
         break;
       case "square-eight":
-        arr[7] = turn;
+        arr[7] = choice;
         setBoard(arr);
         break;
       case "square-nine":
-        arr[8] = turn;
+        arr[8] = choice;
         setBoard(arr);
         break;
       default:
         break;
     }
-    e.target.textContent = turn;
   };
 
-  const squareEmpty = (e) => {
-    if (e.target.textContent) {
+  const squareEmpty = (target) => {
+    if (target.textContent) {
       return false;
     } else {
       return true;
     }
   };
-
-  const changeTurn = (e) => {
-    if (squareEmpty(e)) {
-      
-      displayChoice(e);
+  
+  const drawChoice = (index, choice) => {
+    const target = document.querySelector(`.${index}`);
+    if (squareEmpty(target)) {
+      displayChoice(index, choice);
       turn === "X" ? setTurn("O") : setTurn("X");
     }
   };
 
+  const eventHandler = (e) => {
+    if (player === turn) {
+      drawChoice(e.target.className, player);
+      socket.emit("move-made", e.target.className, player);
+      setMessage("Waiting for Opponent")
+    }
+  };
+
+  socket.on("your-turn", (index, choice) => {
+    drawChoice(index, choice);
+    setMessage("Your turn");
+  });
+
   return (
-    <div className="board">
-      <div className="square-one" onClick={changeTurn}></div>
-      <div className="square-two" onClick={changeTurn}></div>
-      <div className="square-three" onClick={changeTurn}></div>
-      <div className="square-four" onClick={changeTurn}></div>
-      <div className="square-five" onClick={changeTurn}></div>
-      <div className="square-six" onClick={changeTurn}></div>
-      <div className="square-seven" onClick={changeTurn}></div>
-      <div className="square-eight" onClick={changeTurn}></div>
-      <div className="square-nine" onClick={changeTurn}></div>
+    <div className="board-wrapper">
+      <h2>{message}</h2>
+      <div className="board">
+        <div className="square-one" onClick={eventHandler}>{board[0]}</div>
+        <div className="square-two" onClick={eventHandler}>{board[1]}</div>
+        <div className="square-three" onClick={eventHandler}>{board[2]}</div>
+        <div className="square-four" onClick={eventHandler}>{board[3]}</div>
+        <div className="square-five" onClick={eventHandler}>{board[4]}</div>
+        <div className="square-six" onClick={eventHandler}>{board[5]}</div>
+        <div className="square-seven" onClick={eventHandler}>{board[6]}</div>
+        <div className="square-eight" onClick={eventHandler}>{board[7]}</div>
+        <div className="square-nine" onClick={eventHandler}>{board[8]}</div>
+      </div>
     </div>
   );
 };

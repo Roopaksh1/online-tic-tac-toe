@@ -6,6 +6,12 @@
   align-items: center;
 }
 
+.board-wrapper h2 {
+  text-align: center;
+  padding: 2rem;
+  font-size: 3rem;
+}
+
 .board {
   width: 60rem;
   display: flex;
@@ -40,4 +46,21 @@
 
 .logout:active {
   background-color: #a2d2ff;
+}
+
+.room {
+  text-align: center;
+}
+
+.room div {
+  margin-top: 5rem;
+}
+
+.room input {
+  margin-right: 2rem;
+}
+
+p {
+  font-size: 3rem;
+  text-align: center;
 }

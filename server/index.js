@@ -1,20 +1,23 @@
-require('dotenv').config();
+require("dotenv").config();
+const onConnection = require("./socket");
 const express = require("express");
 const cors = require("cors");
-const http = require('http');
-const { Server } = require("socket.io");
+const http = require("http");
 const app = express();
 const httpServer = http.createServer(app);
-const io = new Server(httpServer);
+const { Server } = require("socket.io");
+const io = new Server(httpServer, {
+  cors: {
+    origin: "http://localhost:3000",
+  },
+});
 
 app.use(express.static("../client/build"));
 app.use(express.json());
 app.use(cors());
 app.use("/", require("./routes/user"));
-
 io.on("connection", (socket) => {
-  console.log("A user connected.")
-  socket.on("disconnect", () => console.log("User disconnected."));
+  onConnection(socket, io);
 });
 
 const server = httpServer.listen(process.env.PORT, (err) => {
@@ -23,6 +26,4 @@ const server = httpServer.listen(process.env.PORT, (err) => {
   } else {
     console.log("server up", server.address().port);
   }
-})
-
-module.exports = io;
+});
