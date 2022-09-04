@@ -108,6 +108,7 @@ const Board = ({ setResult, socket, player }) => {
     if (squareEmpty(target)) {
       displayChoice(index, choice);
       turn === "X" ? setTurn("O") : setTurn("X");
+      setMessage("Waiting for Opponent")
     }
   };
 
@@ -115,7 +116,6 @@ const Board = ({ setResult, socket, player }) => {
     if (player === turn) {
       drawChoice(e.target.className, player);
       socket.emit("move-made", e.target.className, player);
-      setMessage("Waiting for Opponent")
     }
   };
 

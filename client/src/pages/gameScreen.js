@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Board from "../components/Board";
 import "../assets/styles/gameScreen.css"
 import Logout from "../components/Logout";
 import Room from "../components/Room";
