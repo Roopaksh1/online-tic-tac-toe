@@ -1,13 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const Board = ({ setResult, socket, player }) => {
   const [board, setBoard] = useState(["", "", "", "", "", "", "", "", ""]);
   const [turn, setTurn] = useState("X");
-  const [message, setMessage] = useState("Your turn");
+  const [message, setMessage] = useState("");
+  const [mode, setMode] = useState("");
+  const gameOver = useRef(false);
 
   useEffect(() => {
-    checkWinner();
-    checkIfTie();
+    if (player === turn) {
+    setMessage("Your turn");
+    } else {
+      setMessage("Waiting for opponent . . .");
+    }
+  }, [turn]);
+
+  useEffect(() => {
+    if (!checkWinner()) {
+      checkIfTie();
+    }
   }, [board]);
 
   const checkPattern = (arr) => {
@@ -41,13 +52,23 @@ const Board = ({ setResult, socket, player }) => {
       }
     });
     if (checkPattern(allX).length || checkPattern(allY).length) {
-      setResult("Win");
+      // setResult("Win");
+      if (player === turn) {
+        setMessage("You Lost")
+      } else {
+        setMessage("You Won");
+      }
+      gameOver.current = true;
+      return 1;
     }
+    return 0;
   };
 
   const checkIfTie = () => {
     if (!board.includes("")) {
-      setResult("Tie");
+      // setResult("Tie");
+      setMessage("TIE");
+      gameOver.current = true;
     }
   };
 
@@ -108,7 +129,6 @@ const Board = ({ setResult, socket, player }) => {
     if (squareEmpty(target)) {
       displayChoice(index, choice);
       turn === "X" ? setTurn("O") : setTurn("X");
-      setMessage("Waiting for Opponent")
     }
   };
 
@@ -121,7 +141,6 @@ const Board = ({ setResult, socket, player }) => {
 
   socket.on("your-turn", (index, choice) => {
     drawChoice(index, choice);
-    setMessage("Your turn");
   });
 
   return (

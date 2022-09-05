@@ -28,7 +28,7 @@ const Room = ({ setResult, socket }) => {
   if (startGame) {
     return <Board setResult={setResult} socket={socket} player={player}/>
   } else if (roomCreate) {
-    return <p>Waiting for player to join <i class="fa-solid fa-spinner fa-spin"></i><br/> Room id: {roomId}</p>;
+    return <p>Waiting for player to join <i className="fa-solid fa-spinner fa-spin"></i><br/> Room id: {roomId}</p>;
   } else {
     return (
       <div className="room">
