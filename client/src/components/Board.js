@@ -5,7 +5,7 @@ const Board = ({ socket, player, reset }) => {
   const [turn, setTurn] = useState("X");
   const [message, setMessage] = useState("");
   const gameOver = useRef(false);
-  const rematchButton = useRef(false);
+  const rematchDisabled = useRef(false);
   const [rematchFlag, setRematchFlag] = useState(false);
 
   useEffect(() => {
@@ -141,7 +141,7 @@ const Board = ({ socket, player, reset }) => {
   const resetBoard = () => {
     setBoard(["", "", "", "", "", "", "", "", ""]);
     gameOver.current = false;
-    rematchButton.current = false;
+    rematchDisabled.current = false;
     setRematchFlag(false);
   }
 
@@ -151,7 +151,7 @@ const Board = ({ socket, player, reset }) => {
 
   socket.on("left-game", () => {
     setMessage("Opponent left the game . . .");
-    rematchButton.current = true;
+    rematchDisabled.current = true;
   });
 
   socket.on("rematch-offer", () => {
@@ -166,6 +166,7 @@ const Board = ({ socket, player, reset }) => {
 
   socket.on("rematch-rejected", () => {
     setMessage("Opponent declined the offer.");
+    rematchDisabled.current = true;
   });
 
   const sendRematchOffer = () => {
@@ -181,6 +182,7 @@ const Board = ({ socket, player, reset }) => {
 
   const rematchDecline = () => {
     socket.emit("rematch-rejecting");
+    rematchDisabled.current = true;
   };
 
   return (
@@ -246,7 +248,7 @@ const Board = ({ socket, player, reset }) => {
       </div>
       {gameOver.current && (
         <div className="after-game-btn">
-          <button onClick={sendRematchOffer} disabled={rematchButton.current}>Rematch</button>
+          <button onClick={sendRematchOffer} disabled={rematchDisabled.current}>Rematch</button>
           <button onClick={reset}>New Game</button>
         </div>
       )}
