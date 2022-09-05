@@ -1,13 +1,9 @@
-const socketController = require("./controllers/socketController");
-
 let room = "";
 
 const onConnection = (socket, io) => {
   console.log("A user connected.", socket.id);
-  socketController.addClient(socket);
   socket.on("disconnect", () => {
     console.log("User disconnected", socket.id);
-    socketController.deleteClient(socket);
   });
 
   socket.on("create-room", (roomid) => {
