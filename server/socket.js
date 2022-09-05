@@ -23,6 +23,23 @@ const onConnection = (socket, io) => {
   socket.on("move-made", (index, choice) => {
     socket.to(room).emit("your-turn", index, choice);
   });
+
+  socket.on("leaving-game", () => {
+    socket.to(room).emit("left-game");
+    socket.leave(room);
+  })
+
+  socket.on("rematch", () => {
+    socket.to(room).emit("rematch-offer");
+  })
+
+  socket.on("rematch-accepting", () => {
+    socket.to(room).emit("rematch-accepted");
+  })
+
+  socket.on("rematch-rejecting", () => {
+    socket.to(room).emit("rematch-rejected");
+  })
 };
 
 module.exports = onConnection;

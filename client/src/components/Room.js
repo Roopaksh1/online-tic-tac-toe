@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Board from "../components/Board";
 
-const Room = ({ setResult, socket }) => {
+const Room = ({ socket }) => {
   const [roomId, setRoomId] = useState(0);
   const [player, setPlayer] = useState("");
   const [roomCreate, setRoomCreate] = useState(false);
@@ -25,8 +25,14 @@ const Room = ({ setResult, socket }) => {
     setStartGame(true);
   });
 
+  const reset = () => {
+    setStartGame(false);
+    setRoomCreate(false);
+    socket.emit("leaving-game");
+  }
+
   if (startGame) {
-    return <Board setResult={setResult} socket={socket} player={player}/>
+    return <Board socket={socket} player={player} reset={reset}/>
   } else if (roomCreate) {
     return <p>Waiting for player to join <i className="fa-solid fa-spinner fa-spin"></i><br/> Room id: {roomId}</p>;
   } else {

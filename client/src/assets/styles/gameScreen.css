@@ -6,6 +6,11 @@
   align-items: center;
 }
 
+.room input {
+  border: black 1px solid;
+  padding: 1rem;
+}
+
 .board-wrapper h2 {
   text-align: center;
   padding: 2rem;
@@ -63,4 +68,39 @@
 p {
   font-size: 3rem;
   text-align: center;
+}
+
+div .disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.after-game-btn button {
+  width: 15rem;
+  display: block;
+  margin: 3rem;
+  background-color: #fefae0;
+}
+
+.after-game-btn button:active {
+  background-color: #faedcd;
+}
+
+.rematch-btn button {
+  position: absolute;
+  background-color: #fefae0;
+}
+
+.rematch-btn button:active {
+  background-color: #faedcd;
+}
+
+.accept-btn {
+  top: 5rem;
+  left: 45rem;
+}
+
+.reject-btn {
+  top: 5rem;
+  left: 80rem;
 }

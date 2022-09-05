@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 
-const Board = ({ setResult, socket, player }) => {
+const Board = ({ socket, player, reset }) => {
   const [board, setBoard] = useState(["", "", "", "", "", "", "", "", ""]);
   const [turn, setTurn] = useState("X");
   const [message, setMessage] = useState("");
-  const [mode, setMode] = useState("");
   const gameOver = useRef(false);
+  const rematchButton = useRef(false);
+  const [rematchFlag, setRematchFlag] = useState(false);
 
   useEffect(() => {
     if (player === turn) {
-    setMessage("Your turn");
+      setMessage("Your turn");
     } else {
       setMessage("Waiting for opponent . . .");
     }
@@ -52,9 +53,8 @@ const Board = ({ setResult, socket, player }) => {
       }
     });
     if (checkPattern(allX).length || checkPattern(allY).length) {
-      // setResult("Win");
       if (player === turn) {
-        setMessage("You Lost")
+        setMessage("You Lost");
       } else {
         setMessage("You Won");
       }
@@ -66,7 +66,6 @@ const Board = ({ setResult, socket, player }) => {
 
   const checkIfTie = () => {
     if (!board.includes("")) {
-      // setResult("Tie");
       setMessage("TIE");
       gameOver.current = true;
     }
@@ -75,39 +74,39 @@ const Board = ({ setResult, socket, player }) => {
   const displayChoice = (index, choice) => {
     const arr = [...board];
     switch (index) {
-      case "square-one":
+      case "square-one ":
         arr[0] = choice;
         setBoard(arr);
         break;
-      case "square-two":
+      case "square-two ":
         arr[1] = choice;
         setBoard(arr);
         break;
-      case "square-three":
+      case "square-three ":
         arr[2] = choice;
         setBoard(arr);
         break;
-      case "square-four":
+      case "square-four ":
         arr[3] = choice;
         setBoard(arr);
         break;
-      case "square-five":
+      case "square-five ":
         arr[4] = choice;
         setBoard(arr);
         break;
-      case "square-six":
+      case "square-six ":
         arr[5] = choice;
         setBoard(arr);
         break;
-      case "square-seven":
+      case "square-seven ":
         arr[6] = choice;
         setBoard(arr);
         break;
-      case "square-eight":
+      case "square-eight ":
         arr[7] = choice;
         setBoard(arr);
         break;
-      case "square-nine":
+      case "square-nine ":
         arr[8] = choice;
         setBoard(arr);
         break;
@@ -123,7 +122,7 @@ const Board = ({ setResult, socket, player }) => {
       return true;
     }
   };
-  
+
   const drawChoice = (index, choice) => {
     const target = document.querySelector(`.${index}`);
     if (squareEmpty(target)) {
@@ -139,25 +138,125 @@ const Board = ({ setResult, socket, player }) => {
     }
   };
 
+  const resetBoard = () => {
+    setBoard(["", "", "", "", "", "", "", "", ""]);
+    gameOver.current = false;
+    rematchButton.current = false;
+    setRematchFlag(false);
+  }
+
   socket.on("your-turn", (index, choice) => {
     drawChoice(index, choice);
   });
 
+  socket.on("left-game", () => {
+    setMessage("Opponent left the game . . .");
+    rematchButton.current = true;
+  });
+
+  socket.on("rematch-offer", () => {
+    setMessage("Rematch offered");
+    setRematchFlag(true);
+  });
+
+  socket.on("rematch-accepted", () => {
+    resetBoard();
+    setMessage("Waiting for opponent . . .");
+  });
+
+  socket.on("rematch-rejected", () => {
+    setMessage("Opponent declined the offer.");
+  });
+
+  const sendRematchOffer = () => {
+    socket.emit("rematch");
+    setMessage("Rematch offer sent . . .");
+  };
+
+  const rematchAccept = () => {
+    socket.emit("rematch-accepting");
+    setMessage("Your turn");
+    resetBoard();
+  };
+
+  const rematchDecline = () => {
+    socket.emit("rematch-rejecting");
+  };
+
   return (
-    <div className="board-wrapper">
-      <h2>{message}</h2>
-      <div className="board">
-        <div className="square-one" onClick={eventHandler}>{board[0]}</div>
-        <div className="square-two" onClick={eventHandler}>{board[1]}</div>
-        <div className="square-three" onClick={eventHandler}>{board[2]}</div>
-        <div className="square-four" onClick={eventHandler}>{board[3]}</div>
-        <div className="square-five" onClick={eventHandler}>{board[4]}</div>
-        <div className="square-six" onClick={eventHandler}>{board[5]}</div>
-        <div className="square-seven" onClick={eventHandler}>{board[6]}</div>
-        <div className="square-eight" onClick={eventHandler}>{board[7]}</div>
-        <div className="square-nine" onClick={eventHandler}>{board[8]}</div>
+    <>
+      <div className="board-wrapper">
+        <h2>{message}</h2>
+        <div className="board">
+          <div
+            className={"square-one " + (gameOver.current ? "disabled" : "")}
+            onClick={eventHandler}
+          >
+            {board[0]}
+          </div>
+          <div
+            className={"square-two " + (gameOver.current ? "disabled" : "")}
+            onClick={eventHandler}
+          >
+            {board[1]}
+          </div>
+          <div
+            className={"square-three " + (gameOver.current ? "disabled" : "")}
+            onClick={eventHandler}
+          >
+            {board[2]}
+          </div>
+          <div
+            className={"square-four " + (gameOver.current ? "disabled" : "")}
+            onClick={eventHandler}
+          >
+            {board[3]}
+          </div>
+          <div
+            className={"square-five " + (gameOver.current ? "disabled" : "")}
+            onClick={eventHandler}
+          >
+            {board[4]}
+          </div>
+          <div
+            className={"square-six " + (gameOver.current ? "disabled" : "")}
+            onClick={eventHandler}
+          >
+            {board[5]}
+          </div>
+          <div
+            className={"square-seven " + (gameOver.current ? "disabled" : "")}
+            onClick={eventHandler}
+          >
+            {board[6]}
+          </div>
+          <div
+            className={"square-eight " + (gameOver.current ? "disabled" : "")}
+            onClick={eventHandler}
+          >
+            {board[7]}
+          </div>
+          <div
+            className={"square-nine " + (gameOver.current ? "disabled" : "")}
+            onClick={eventHandler}
+          >
+            {board[8]}
+          </div>
+        </div>
       </div>
-    </div>
+      {gameOver.current && (
+        <div className="after-game-btn">
+          <button onClick={sendRematchOffer} disabled={rematchButton.current}>Rematch</button>
+          <button onClick={reset}>New Game</button>
+        </div>
+      )}
+      {rematchFlag && (
+        <div className="rematch-btn">
+          <button onClick={rematchAccept} className="accept-btn">Accept</button>
+          <button onClick={rematchDecline} className="reject-btn">Reject</button>
+        </div>
+      )}
+    </>
   );
 };
 
