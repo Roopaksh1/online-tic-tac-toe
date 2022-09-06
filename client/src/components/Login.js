@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import { useState } from "react";
 import { API_CLIENT } from "../shared/services/api_client";
 
@@ -5,6 +6,7 @@ const Login = ({ setToken }) => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+
   const login = async () => {
     const result = await API_CLIENT.post(process.env.REACT_APP_LOGIN, {
       username,
@@ -47,7 +49,14 @@ const Login = ({ setToken }) => {
           ></input>
           <label htmlFor="pass-word">Password</label>
         </div>
-        <button onClick={login}>Login</button>
+        <Button
+          sx={{ fontSize: "2rem" }}
+          variant="contained"
+          color="success"
+          onClick={login}
+        >
+          Login
+        </Button>
         <p>{message}</p>
       </div>
     </>

@@ -1,11 +1,23 @@
+import { Button } from "@mui/material";
+
 const Logout = ({ setToken }) => {
   const logout = () => {
     setToken(false);
   };
   return (
-    <button className="logout" onClick={logout}>
+    <Button
+      sx={{
+        fontSize: "1.5rem",
+        padding: "1rem",
+        position: "absolute",
+        top: "1rem",
+        left: "1rem",
+      }}
+      variant="contained"
+      onClick={logout}
+    >
       Log out
-    </button>
+    </Button>
   );
 };
 

@@ -6,11 +6,6 @@
   align-items: center;
 }
 
-.room input {
-  border: black 1px solid;
-  padding: 1rem;
-}
-
 .board-wrapper h2 {
   text-align: center;
   padding: 2rem;
@@ -39,30 +34,35 @@
   background-color: #e5e5e5;
 }
 
-.logout {
-  background-color: #bde0fe;
-  cursor: pointer;
-  font-size: 2rem;
-  padding: 1rem;
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-}
-
-.logout:active {
-  background-color: #a2d2ff;
-}
-
 .room {
   text-align: center;
 }
 
 .room div {
   margin-top: 5rem;
+  position: relative;
 }
 
 .room input {
+  padding: 1rem;
   margin-right: 2rem;
+}
+
+.room label::before {
+  content: "Room ID";
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  width: 8rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.room input:not(:placeholder-shown) + label::before{
+  opacity: 1;
+  top: -2rem;
 }
 
 p {
@@ -77,30 +77,22 @@ div .disabled {
 
 .after-game-btn button {
   width: 15rem;
-  display: block;
   margin: 3rem;
-  background-color: #fefae0;
-}
-
-.after-game-btn button:active {
-  background-color: #faedcd;
+  display: block;
+  font-size: 2rem
 }
 
 .rematch-btn button {
   position: absolute;
-  background-color: #fefae0;
-}
-
-.rematch-btn button:active {
-  background-color: #faedcd;
+  font-size: 1.5rem;
 }
 
 .accept-btn {
   top: 5rem;
-  left: 45rem;
+  left: 40rem;
 }
 
 .reject-btn {
   top: 5rem;
-  left: 80rem;
+  left: 83rem;
 }

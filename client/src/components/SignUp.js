@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import { useState } from "react";
 import { API_CLIENT } from "../shared/services/api_client";
 
@@ -70,7 +71,14 @@ const SignUp = ({ setToken }) => {
           ></input>
           <label htmlFor="password">Password</label>
         </div>
-        <button onClick={signUp}>SignUp</button>
+        <Button
+          sx={{ fontSize: "2rem" }}
+          variant="contained"
+          color="success"
+          onClick={signUp}
+        >
+          Sign Up
+        </Button>
         <p>{message}</p>
       </div>
     </>

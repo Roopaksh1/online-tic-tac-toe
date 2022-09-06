@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Board from "../components/Board";
+import Button from "@mui/material/Button";
+import SendIcon from "@mui/icons-material/Send";
 
 const Room = ({ socket }) => {
   const [roomId, setRoomId] = useState(0);
@@ -54,14 +56,28 @@ const Room = ({ socket }) => {
   } else {
     return (
       <div className="room">
-        <button onClick={createRoom}>Create Room</button>
+        <Button
+          sx={{ fontSize: "1.5rem" }}
+          variant="contained"
+          onClick={createRoom}
+        >
+          Create Room
+        </Button>
         <div>
           <input
             type="text"
-            placeholder="room id"
+            placeholder="Room ID"
             onChange={(e) => setRoomInput(e.target.value)}
           ></input>
-          <button onClick={joinRoom}>Join Room</button>
+          <label></label>
+          <Button
+            sx={{ fontSize: "1.5rem" }}
+            variant="contained"
+            endIcon={<SendIcon />}
+            onClick={joinRoom}
+          >
+            Join Room
+          </Button>
         </div>
       </div>
     );

@@ -3,8 +3,7 @@ h1 {
   text-align: center;
 }
 
-.login p,
-.signup p {
+.login p, .signup p {
   font-size: 1.5rem;
   color: #f08080;
 }
@@ -43,17 +42,18 @@ h1 {
   position: relative;
 }
 
-label {
+.field label {
   position: absolute;
   top: 0;
   left: 0;
   font-size: 1.5rem;
-  opacity: 0;
+  letter-spacing: 2px;
+  opacity:0;
   cursor: text;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease-in-out;
 }
 
-input {
+.field input {
   outline: none;
   border: none;
   border-bottom: black solid 1px;
@@ -61,18 +61,7 @@ input {
   background-color: #eaf4f4;
 }
 
-input:not(:placeholder-shown) + label {
+.field input:not(:placeholder-shown) + label {
   opacity: 1;
   top: -2rem;
-}
-
-button {
-  background-color: #bde0fe;
-  cursor: pointer;
-  font-size: 2rem;
-  padding: 1rem;
-}
-
-button:active {
-  background-color: #a2d2ff;
 }

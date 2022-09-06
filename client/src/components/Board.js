@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import Button from "@mui/material/Button";
 
 const Board = ({ socket, player, reset, roomId }) => {
   const [board, setBoard] = useState(["", "", "", "", "", "", "", "", ""]);
@@ -206,20 +207,36 @@ const Board = ({ socket, player, reset, roomId }) => {
       </div>
       {gameOver.current && (
         <div className="after-game-btn">
-          <button onClick={sendRematchOffer} disabled={rematchDisabled.current}>
+          <Button
+            variant="contained"
+            onClick={sendRematchOffer}
+            disabled={rematchDisabled.current}
+          >
             Rematch
-          </button>
-          <button onClick={reset}>New Game</button>
+          </Button>
+          <Button variant="contained" onClick={reset}>
+            New Game
+          </Button>
         </div>
       )}
       {rematchFlag && (
         <div className="rematch-btn">
-          <button onClick={rematchAccept} className="accept-btn">
+          <Button
+            variant="contained"
+            color="success"
+            onClick={rematchAccept}
+            className="accept-btn"
+          >
             Accept
-          </button>
-          <button onClick={rematchDecline} className="reject-btn">
+          </Button>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={rematchDecline}
+            className="reject-btn"
+          >
             Reject
-          </button>
+          </Button>
         </div>
       )}
     </>
