@@ -1,6 +1,5 @@
 import "../assets/styles/loginScreen.css";
 import Login from "../components/Login";
-import SignUp from "../components/SignUp";
 
 const LoginScreen = ({ setToken }) => {
   return (

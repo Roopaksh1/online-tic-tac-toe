@@ -33,7 +33,7 @@ const SignUp = ({ setToken }) => {
   return (
     <>
       {flag ? (
-        <Login />
+        <Login setToken={setToken}/>
       ) : (
         <div className="signup">
           <h2>Sign Up</h2>
