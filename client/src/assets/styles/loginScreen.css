@@ -3,7 +3,8 @@ h1 {
   text-align: center;
 }
 
-.login p, .signup p {
+.login p,
+.signup p {
   font-size: 1.5rem;
   color: #f08080;
 }
@@ -47,7 +48,7 @@ label {
   top: 0;
   left: 0;
   font-size: 1.5rem;
-  opacity:0;
+  opacity: 0;
   cursor: text;
   transition: all 0.3s ease;
 }

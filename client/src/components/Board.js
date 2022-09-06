@@ -23,6 +23,7 @@ const Board = ({ socket, player, reset, roomId }) => {
   }, [board]);
 
   // Game Logic
+  // Winning Patterns
   const checkPattern = (arr) => {
     const patterns = [
       [0, 1, 2],
@@ -44,16 +45,16 @@ const Board = ({ socket, player, reset, roomId }) => {
   };
 
   const checkWinner = () => {
-    const allX = [];
-    const allO = [];
+    const allXIndex = [];
+    const allOIndex = [];
     board.forEach((d, index) => {
       if (d === "X") {
-        allX.push(index);
+        allXIndex.push(index);
       } else if (d === "O") {
-        allO.push(index);
+        allOIndex.push(index);
       }
     });
-    if (checkPattern(allX).length || checkPattern(allO).length) {
+    if (checkPattern(allXIndex).length || checkPattern(allOIndex).length) {
       if (player === turn) {
         setMessage("You Lost");
       } else {
@@ -72,70 +73,23 @@ const Board = ({ socket, player, reset, roomId }) => {
     }
   };
 
-  const squareEmpty = (target) => {
-    if (target.textContent) {
-      return false;
-    } else {
-      return true;
-    }
+  const isSquareEmpty = (index) => {
+    return board[index] ? false : true;
   };
 
-  const displayChoice = (index, choice) => {
+  const insertOnBoard = (index, choice) => {
     const arr = [...board];
-    switch (index) {
-      case "square-one ":
-        arr[0] = choice;
-        setBoard(arr);
-        break;
-      case "square-two ":
-        arr[1] = choice;
-        setBoard(arr);
-        break;
-      case "square-three ":
-        arr[2] = choice;
-        setBoard(arr);
-        break;
-      case "square-four ":
-        arr[3] = choice;
-        setBoard(arr);
-        break;
-      case "square-five ":
-        arr[4] = choice;
-        setBoard(arr);
-        break;
-      case "square-six ":
-        arr[5] = choice;
-        setBoard(arr);
-        break;
-      case "square-seven ":
-        arr[6] = choice;
-        setBoard(arr);
-        break;
-      case "square-eight ":
-        arr[7] = choice;
-        setBoard(arr);
-        break;
-      case "square-nine ":
-        arr[8] = choice;
-        setBoard(arr);
-        break;
-      default:
-        break;
-    }
+    arr[index] = choice;
+    setBoard(arr);
+    turn === "X" ? setTurn("O") : setTurn("X");
   };
 
   const drawChoice = (index, choice) => {
-    const target = document.querySelector(`.${index}`);
-    if (squareEmpty(target)) {
-      displayChoice(index, choice);
-      turn === "X" ? setTurn("O") : setTurn("X");
-    }
-  };
-
-  const eventHandler = (e) => {
     if (player === turn) {
-      drawChoice(e.target.className, player);
-      socket.emit("move-made", e.target.className, player, roomId);
+      if (isSquareEmpty(index)) {
+        insertOnBoard(index, choice);
+        socket.emit("move-made", index, player, roomId);
+      }
     }
   };
 
@@ -144,7 +98,7 @@ const Board = ({ socket, player, reset, roomId }) => {
     gameOver.current = false;
     rematchDisabled.current = false;
     setRematchFlag(false);
-  }
+  };
 
   const sendRematchOffer = () => {
     socket.emit("rematch", roomId);
@@ -165,7 +119,7 @@ const Board = ({ socket, player, reset, roomId }) => {
 
   // Socket.io events
   socket.on("your-turn", (index, choice) => {
-    drawChoice(index, choice);
+    insertOnBoard(index, choice);
   });
 
   socket.on("left-game", () => {
@@ -196,55 +150,55 @@ const Board = ({ socket, player, reset, roomId }) => {
         <div className="board">
           <div
             className={"square-one " + (gameOver.current ? "disabled" : "")}
-            onClick={eventHandler}
+            onClick={() => drawChoice(0, player)}
           >
             {board[0]}
           </div>
           <div
             className={"square-two " + (gameOver.current ? "disabled" : "")}
-            onClick={eventHandler}
+            onClick={() => drawChoice(1, player)}
           >
             {board[1]}
           </div>
           <div
             className={"square-three " + (gameOver.current ? "disabled" : "")}
-            onClick={eventHandler}
+            onClick={() => drawChoice(2, player)}
           >
             {board[2]}
           </div>
           <div
             className={"square-four " + (gameOver.current ? "disabled" : "")}
-            onClick={eventHandler}
+            onClick={() => drawChoice(3, player)}
           >
             {board[3]}
           </div>
           <div
             className={"square-five " + (gameOver.current ? "disabled" : "")}
-            onClick={eventHandler}
+            onClick={() => drawChoice(4, player)}
           >
             {board[4]}
           </div>
           <div
             className={"square-six " + (gameOver.current ? "disabled" : "")}
-            onClick={eventHandler}
+            onClick={() => drawChoice(5, player)}
           >
             {board[5]}
           </div>
           <div
             className={"square-seven " + (gameOver.current ? "disabled" : "")}
-            onClick={eventHandler}
+            onClick={() => drawChoice(6, player)}
           >
             {board[6]}
           </div>
           <div
             className={"square-eight " + (gameOver.current ? "disabled" : "")}
-            onClick={eventHandler}
+            onClick={() => drawChoice(7, player)}
           >
             {board[7]}
           </div>
           <div
             className={"square-nine " + (gameOver.current ? "disabled" : "")}
-            onClick={eventHandler}
+            onClick={() => drawChoice(8, player)}
           >
             {board[8]}
           </div>
@@ -252,14 +206,20 @@ const Board = ({ socket, player, reset, roomId }) => {
       </div>
       {gameOver.current && (
         <div className="after-game-btn">
-          <button onClick={sendRematchOffer} disabled={rematchDisabled.current}>Rematch</button>
+          <button onClick={sendRematchOffer} disabled={rematchDisabled.current}>
+            Rematch
+          </button>
           <button onClick={reset}>New Game</button>
         </div>
       )}
       {rematchFlag && (
         <div className="rematch-btn">
-          <button onClick={rematchAccept} className="accept-btn">Accept</button>
-          <button onClick={rematchDecline} className="reject-btn">Reject</button>
+          <button onClick={rematchAccept} className="accept-btn">
+            Accept
+          </button>
+          <button onClick={rematchDecline} className="reject-btn">
+            Reject
+          </button>
         </div>
       )}
     </>

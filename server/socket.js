@@ -8,7 +8,7 @@ const onConnection = (socket, io) => {
   });
 
   socket.on("create-room", () => {
-    let roomId = Math.floor(Math.random() * maxRooms).toString(); 
+    let roomId = Math.floor(Math.random() * maxRooms).toString();
     while (rooms.includes(roomId)) {
       roomId = Math.floor(Math.random() * maxRooms).toString();
     }
@@ -18,7 +18,7 @@ const onConnection = (socket, io) => {
   });
 
   socket.on("join-room", (roomId) => {
-    if(rooms.includes(roomId)) {
+    if (rooms.includes(roomId)) {
       socket.join(roomId);
       io.to(roomId).emit("start-game");
     } else {
@@ -33,19 +33,19 @@ const onConnection = (socket, io) => {
   socket.on("leaving-game", (roomId) => {
     socket.to(roomId).emit("left-game");
     socket.leave(roomId);
-  })
+  });
 
   socket.on("rematch", (roomId) => {
     socket.to(roomId).emit("rematch-offer");
-  })
+  });
 
   socket.on("rematch-accepting", (roomId) => {
     socket.to(roomId).emit("rematch-accepted");
-  })
+  });
 
   socket.on("rematch-rejecting", (roomId) => {
     socket.to(roomId).emit("rematch-rejected");
-  })
+  });
 };
 
 module.exports = onConnection;

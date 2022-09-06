@@ -14,9 +14,9 @@ const Login = ({ setToken }) => {
       if (result.data.flag === 1) {
         if (result.data.doc.password === password) {
           setMessage(`Welcome ${result.data.doc.firstname}`);
-          setToken({...result.data.doc, token: true});
+          setToken({ ...result.data.doc, token: true });
         } else {
-          setMessage("Incorrect password.")
+          setMessage("Incorrect password.");
         }
       } else {
         setMessage("Database Error.");

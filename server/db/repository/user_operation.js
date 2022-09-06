@@ -5,7 +5,7 @@ module.exports = {
     UserModel.create(userObject, (err) => {
       if (err) {
         console.log(err.message);
-        response.json({ message: "All fields are required." })
+        response.json({ message: "All fields are required." });
       } else {
         response.json({ message: "Registered." });
       }

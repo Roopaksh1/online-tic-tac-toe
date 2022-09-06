@@ -13,31 +13,44 @@ const Room = ({ socket }) => {
     setPlayer("X");
   };
 
-  socket.on("unique-id", (roomId) => {
-    setRoomCreate(true);
-    setRoomId(roomId);
-  });
-
   const joinRoom = () => {
-    setPlayer("O")
+    setPlayer("O");
     setRoomId(roomInput);
     socket.emit("join-room", roomInput);
   };
-
-  socket.on("start-game", () => {
-    setStartGame(true);
-  });
 
   const reset = () => {
     setStartGame(false);
     setRoomCreate(false);
     socket.emit("leaving-game", roomId);
-  }
+  };
+
+  socket.on("unique-id", (roomId) => {
+    setRoomCreate(true);
+    setRoomId(roomId);
+  });
+
+  socket.on("start-game", () => {
+    setStartGame(true);
+  });
 
   if (startGame) {
-    return <Board socket={socket} player={player} reset={reset} roomId={roomId.toString()}/>
+    return (
+      <Board
+        socket={socket}
+        player={player}
+        reset={reset}
+        roomId={roomId.toString()}
+      />
+    );
   } else if (roomCreate) {
-    return <p>Waiting for player to join <i className="fa-solid fa-spinner fa-spin"></i><br/> Room id: {roomId}</p>;
+    return (
+      <p>
+        Waiting for player to join{" "}
+        <i className="fa-solid fa-spinner fa-spin"></i>
+        <br /> Room id: {roomId}
+      </p>
+    );
   } else {
     return (
       <div className="room">

@@ -2,7 +2,9 @@
   font-size: 62.5%;
 }
 
-*, *::after, *::before {
+*,
+*::after,
+*::before {
   margin: 0;
   padding: 0;
 }

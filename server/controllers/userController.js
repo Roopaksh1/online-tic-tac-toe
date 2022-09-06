@@ -8,5 +8,5 @@ module.exports = {
   signup(request, response) {
     const userObject = request.body;
     userOperations.add(userObject, response);
-  }
+  },
 };
