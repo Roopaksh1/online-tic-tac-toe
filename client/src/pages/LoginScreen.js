@@ -7,7 +7,6 @@ const LoginScreen = ({ setToken }) => {
     <>
       <h1>TIC TAC TOE</h1>
       <Login setToken={setToken} />
-      <SignUp setToken={setToken} />
     </>
   );
 };
