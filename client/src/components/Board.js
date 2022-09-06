@@ -115,6 +115,7 @@ const Board = ({ socket, player, reset, roomId }) => {
   const rematchDecline = () => {
     socket.emit("rematch-rejecting", roomId);
     rematchDisabled.current = true;
+    setRematchFlag(false);
   };
   // Game logic
 
