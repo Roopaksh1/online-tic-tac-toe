@@ -67,6 +67,7 @@ const Room = ({ socket }) => {
           <input
             type="text"
             placeholder="Room ID"
+            autoFocus
             onChange={(e) => setRoomInput(e.target.value)}
           ></input>
           <label></label>

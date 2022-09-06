@@ -37,7 +37,7 @@ const Login = ({ setToken }) => {
   return (
     <>
       {flag ? (
-        <SignUp setToken={setToken}/>
+        <SignUp setToken={setToken} />
       ) : (
         <div className="login">
           <h2>Login</h2>
@@ -46,6 +46,7 @@ const Login = ({ setToken }) => {
               type="text"
               id="username"
               placeholder="User Name"
+              autoFocus
               onChange={(e) => setUserName(e.target.value)}
             ></input>
             <label htmlFor="username">User Name</label>

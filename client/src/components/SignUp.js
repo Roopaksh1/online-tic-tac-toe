@@ -33,7 +33,7 @@ const SignUp = ({ setToken }) => {
   return (
     <>
       {flag ? (
-        <Login setToken={setToken}/>
+        <Login setToken={setToken} />
       ) : (
         <div className="signup">
           <h2>Sign Up</h2>
@@ -42,6 +42,7 @@ const SignUp = ({ setToken }) => {
               type="text"
               id="first-name"
               placeholder="First Name"
+              autoFocus
               onChange={(e) => {
                 setUser({ ...user, firstname: e.target.value });
               }}
