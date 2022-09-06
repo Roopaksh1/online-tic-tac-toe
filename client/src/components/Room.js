@@ -9,15 +9,18 @@ const Room = ({ socket }) => {
   const [roomInput, setRoomInput] = useState("");
 
   const createRoom = () => {
-    const temp = Math.floor(Math.random() * 1000)
-    setRoomId(temp);
+    socket.emit("create-room");
     setPlayer("X");
-    socket.emit("create-room", temp.toString());
-    setRoomCreate(true);
   };
+
+  socket.on("unique-id", (roomId) => {
+    setRoomCreate(true);
+    setRoomId(roomId);
+  });
 
   const joinRoom = () => {
     setPlayer("O")
+    setRoomId(roomInput);
     socket.emit("join-room", roomInput);
   };
 
@@ -28,11 +31,11 @@ const Room = ({ socket }) => {
   const reset = () => {
     setStartGame(false);
     setRoomCreate(false);
-    socket.emit("leaving-game");
+    socket.emit("leaving-game", roomId);
   }
 
   if (startGame) {
-    return <Board socket={socket} player={player} reset={reset}/>
+    return <Board socket={socket} player={player} reset={reset} roomId={roomId.toString()}/>
   } else if (roomCreate) {
     return <p>Waiting for player to join <i className="fa-solid fa-spinner fa-spin"></i><br/> Room id: {roomId}</p>;
   } else {

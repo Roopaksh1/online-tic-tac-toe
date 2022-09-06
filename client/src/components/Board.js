@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const Board = ({ socket, player, reset }) => {
+const Board = ({ socket, player, reset, roomId }) => {
   const [board, setBoard] = useState(["", "", "", "", "", "", "", "", ""]);
   const [turn, setTurn] = useState("X");
   const [message, setMessage] = useState("");
@@ -22,6 +22,7 @@ const Board = ({ socket, player, reset }) => {
     }
   }, [board]);
 
+  // Game Logic
   const checkPattern = (arr) => {
     const patterns = [
       [0, 1, 2],
@@ -44,15 +45,15 @@ const Board = ({ socket, player, reset }) => {
 
   const checkWinner = () => {
     const allX = [];
-    const allY = [];
+    const allO = [];
     board.forEach((d, index) => {
       if (d === "X") {
         allX.push(index);
       } else if (d === "O") {
-        allY.push(index);
+        allO.push(index);
       }
     });
-    if (checkPattern(allX).length || checkPattern(allY).length) {
+    if (checkPattern(allX).length || checkPattern(allO).length) {
       if (player === turn) {
         setMessage("You Lost");
       } else {
@@ -68,6 +69,14 @@ const Board = ({ socket, player, reset }) => {
     if (!board.includes("")) {
       setMessage("TIE");
       gameOver.current = true;
+    }
+  };
+
+  const squareEmpty = (target) => {
+    if (target.textContent) {
+      return false;
+    } else {
+      return true;
     }
   };
 
@@ -115,14 +124,6 @@ const Board = ({ socket, player, reset }) => {
     }
   };
 
-  const squareEmpty = (target) => {
-    if (target.textContent) {
-      return false;
-    } else {
-      return true;
-    }
-  };
-
   const drawChoice = (index, choice) => {
     const target = document.querySelector(`.${index}`);
     if (squareEmpty(target)) {
@@ -134,7 +135,7 @@ const Board = ({ socket, player, reset }) => {
   const eventHandler = (e) => {
     if (player === turn) {
       drawChoice(e.target.className, player);
-      socket.emit("move-made", e.target.className, player);
+      socket.emit("move-made", e.target.className, player, roomId);
     }
   };
 
@@ -145,6 +146,24 @@ const Board = ({ socket, player, reset }) => {
     setRematchFlag(false);
   }
 
+  const sendRematchOffer = () => {
+    socket.emit("rematch", roomId);
+    setMessage("Rematch offer sent . . .");
+  };
+
+  const rematchAccept = () => {
+    socket.emit("rematch-accepting", roomId);
+    setMessage("Your turn");
+    resetBoard();
+  };
+
+  const rematchDecline = () => {
+    socket.emit("rematch-rejecting", roomId);
+    rematchDisabled.current = true;
+  };
+  // Game logic
+
+  // Socket.io events
   socket.on("your-turn", (index, choice) => {
     drawChoice(index, choice);
   });
@@ -168,22 +187,7 @@ const Board = ({ socket, player, reset }) => {
     setMessage("Opponent declined the offer.");
     rematchDisabled.current = true;
   });
-
-  const sendRematchOffer = () => {
-    socket.emit("rematch");
-    setMessage("Rematch offer sent . . .");
-  };
-
-  const rematchAccept = () => {
-    socket.emit("rematch-accepting");
-    setMessage("Your turn");
-    resetBoard();
-  };
-
-  const rematchDecline = () => {
-    socket.emit("rematch-rejecting");
-    rematchDisabled.current = true;
-  };
+  // Socket.io events
 
   return (
     <>
