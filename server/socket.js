@@ -2,10 +2,6 @@ const rooms = [];
 const maxRooms = 10;
 
 const onConnection = (socket, io) => {
-  console.log("A user connected.", socket.id);
-  socket.on("disconnect", () => {
-    console.log("User disconnected", socket.id);
-  });
 
   socket.on("create-room", () => {
     let roomId = Math.floor(Math.random() * maxRooms).toString();

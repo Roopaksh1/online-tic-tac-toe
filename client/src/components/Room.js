@@ -15,9 +15,7 @@ const Room = ({ socket }) => {
     if (socket.connected) {
       socket.emit("create-room");
       setPlayer("X");
-    } else {
-      console.log("Network Error");
-    }
+    } 
   };
 
   const joinRoom = () => {
@@ -25,18 +23,14 @@ const Room = ({ socket }) => {
     setRoomId(roomInput);
     if (socket.connected) {
       socket.emit("join-room", roomInput);
-    } else {
-      console.log("Network Error");
     }
   };
 
   const reset = () => {
-    setStartGame(false);
-    setRoomCreate(false);
     if (socket.connected) {
+      setStartGame(false);
+      setRoomCreate(false);
       socket.emit("leaving-game", roomId);
-    } else {
-      console.log("Network Error");
     }
   };
 
@@ -53,54 +47,54 @@ const Room = ({ socket }) => {
     setStartGame(true);
   });
 
-  if (startGame) {
-    return (
-      <Board
-        socket={socket}
-        player={player}
-        reset={reset}
-        roomId={roomId.toString()}
-      />
-    );
-  } else if (roomCreate) {
-    return (
-      <p>
-        Waiting for player to join{" "}
-        <i className="fa-solid fa-spinner fa-spin"></i>
-        <br /> Room id: {roomId}
-      </p>
-    );
-  } else {
-    return (
-      <div className="room">
-        <Button
-          sx={{ fontSize: "1.5rem" }}
-          variant="contained"
-          onClick={createRoom}
-        >
-          Create Room
-        </Button>
-        <div>
-          <input
-            type="text"
-            placeholder="Room ID"
-            autoFocus
-            onChange={(e) => setRoomInput(e.target.value)}
-          ></input>
-          <label></label>
+  return (
+    <>
+      {startGame && (
+        <Board
+          socket={socket}
+          player={player}
+          reset={reset}
+          roomId={roomId.toString()}
+        />
+      )}
+      {!startGame && roomCreate && (
+        <p>
+          Waiting for player to join &nbsp;
+          <i className="fa-solid fa-spinner fa-spin"></i>
+          <br /> Room id: {roomId}
+        </p>
+      )}
+      {!startGame && !roomCreate && (
+        <div className="room">
           <Button
             sx={{ fontSize: "1.5rem" }}
             variant="contained"
-            endIcon={<SendIcon />}
-            onClick={joinRoom}
+            onClick={createRoom}
           >
-            Join Room
+            Create Room
           </Button>
+          <div>
+            <input
+              type="text"
+              placeholder="Room ID"
+              autoFocus
+              onChange={(e) => setRoomInput(e.target.value)}
+            ></input>
+            <label></label>
+            <Button
+              sx={{ fontSize: "1.5rem" }}
+              variant="contained"
+              endIcon={<SendIcon />}
+              onClick={joinRoom}
+            >
+              Join Room
+            </Button>
+          </div>
+          <h2>{roomError}</h2>
         </div>
-        <h2>{roomError}</h2>
-      </div>
-    );
-  }
+      )}
+    </>
+  );
 };
 
 export default Room;

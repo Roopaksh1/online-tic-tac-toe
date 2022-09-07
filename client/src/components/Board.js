@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Button from "@mui/material/Button";
+import { Alert, AlertTitle } from "@mui/material";
 
 const Board = ({ socket, player, reset, roomId }) => {
   const [board, setBoard] = useState(["", "", "", "", "", "", "", "", ""]);
@@ -91,8 +92,6 @@ const Board = ({ socket, player, reset, roomId }) => {
         if (socket.connected) {
           insertOnBoard(index, choice);
           socket.emit("move-made", index, player, roomId);
-        } else {
-          console.log("Network Error");
         }
       }
     }
@@ -109,8 +108,6 @@ const Board = ({ socket, player, reset, roomId }) => {
     if (socket.connected) {
       socket.emit("rematch", roomId);
       setMessage("Rematch offer sent . . .");
-    } else {
-      console.log("Network Error");
     }
   };
 
@@ -119,8 +116,6 @@ const Board = ({ socket, player, reset, roomId }) => {
       socket.emit("rematch-accepting", roomId);
       setMessage("Your turn");
       resetBoard();
-    } else {
-      console.log("Network Error");
     }
   };
 
@@ -129,8 +124,6 @@ const Board = ({ socket, player, reset, roomId }) => {
       socket.emit("rematch-rejecting", roomId);
       rematchDisabled.current = true;
       setRematchFlag(false);
-    } else {
-      console.log("Network Error");
     }
   };
   // Game logic
