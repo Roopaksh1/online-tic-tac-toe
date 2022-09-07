@@ -9,10 +9,10 @@ const Room = ({ socket }) => {
   const [roomCreate, setRoomCreate] = useState(false);
   const [startGame, setStartGame] = useState(false);
   const [roomInput, setRoomInput] = useState("");
+  const [roomError, setRoomError] = useState("");
 
   const createRoom = () => {
     if (socket.connected) {
-      console.log(socket.connected);
       socket.emit("create-room");
       setPlayer("X");
     } else {
@@ -43,6 +43,10 @@ const Room = ({ socket }) => {
   socket.on("unique-id", (roomId) => {
     setRoomCreate(true);
     setRoomId(roomId);
+  });
+
+  socket.on("wrong-room-id", () => {
+    setRoomError("Invalid Room ID");
   });
 
   socket.on("start-game", () => {
@@ -93,6 +97,7 @@ const Room = ({ socket }) => {
             Join Room
           </Button>
         </div>
+        <h2>{roomError}</h2>
       </div>
     );
   }

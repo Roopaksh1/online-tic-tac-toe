@@ -23,7 +23,7 @@ const onConnection = (socket, io) => {
       socket.join(roomId);
       io.to(roomId).emit("start-game");
     } else {
-      socket.emit("Wrong-room-id");
+      socket.emit("wrong-room-id");
     }
   });
 
