@@ -11,20 +11,33 @@ const Room = ({ socket }) => {
   const [roomInput, setRoomInput] = useState("");
 
   const createRoom = () => {
-    socket.emit("create-room");
-    setPlayer("X");
+    if (socket.connected) {
+      console.log(socket.connected);
+      socket.emit("create-room");
+      setPlayer("X");
+    } else {
+      console.log("Network Error");
+    }
   };
 
   const joinRoom = () => {
     setPlayer("O");
     setRoomId(roomInput);
-    socket.emit("join-room", roomInput);
+    if (socket.connected) {
+      socket.emit("join-room", roomInput);
+    } else {
+      console.log("Network Error");
+    }
   };
 
   const reset = () => {
     setStartGame(false);
     setRoomCreate(false);
-    socket.emit("leaving-game", roomId);
+    if (socket.connected) {
+      socket.emit("leaving-game", roomId);
+    } else {
+      console.log("Network Error");
+    }
   };
 
   socket.on("unique-id", (roomId) => {

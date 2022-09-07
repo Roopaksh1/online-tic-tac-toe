@@ -5,6 +5,7 @@ const onConnection = (socket, io) => {
   console.log("A user connected.", socket.id);
   socket.on("disconnect", () => {
     console.log("User disconnected", socket.id);
+    socket
   });
 
   socket.on("create-room", () => {

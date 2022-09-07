@@ -89,7 +89,11 @@ const Board = ({ socket, player, reset, roomId }) => {
     if (player === turn) {
       if (isSquareEmpty(index)) {
         insertOnBoard(index, choice);
-        socket.emit("move-made", index, player, roomId);
+        if (socket.connected) {
+          socket.emit("move-made", index, player, roomId);
+        } else {
+          console.log("Network Error");
+        }
       }
     }
   };
@@ -102,20 +106,32 @@ const Board = ({ socket, player, reset, roomId }) => {
   };
 
   const sendRematchOffer = () => {
-    socket.emit("rematch", roomId);
-    setMessage("Rematch offer sent . . .");
+    if (socket.connected) {
+      socket.emit("rematch", roomId);
+      setMessage("Rematch offer sent . . .");
+    } else {
+      console.log("Network Error");
+    }
   };
 
   const rematchAccept = () => {
-    socket.emit("rematch-accepting", roomId);
-    setMessage("Your turn");
-    resetBoard();
+    if (socket.connected) {
+      socket.emit("rematch-accepting", roomId);
+      setMessage("Your turn");
+      resetBoard();
+    } else {
+      console.log("Network Error");
+    }
   };
 
   const rematchDecline = () => {
-    socket.emit("rematch-rejecting", roomId);
-    rematchDisabled.current = true;
-    setRematchFlag(false);
+    if (socket.connected) {
+      socket.emit("rematch-rejecting", roomId);
+      rematchDisabled.current = true;
+      setRematchFlag(false);
+    } else {
+      console.log("Network Error");
+    }
   };
   // Game logic
 
