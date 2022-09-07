@@ -88,8 +88,8 @@ const Board = ({ socket, player, reset, roomId }) => {
   const drawChoice = (index, choice) => {
     if (player === turn) {
       if (isSquareEmpty(index)) {
-        insertOnBoard(index, choice);
         if (socket.connected) {
+          insertOnBoard(index, choice);
           socket.emit("move-made", index, player, roomId);
         } else {
           console.log("Network Error");
@@ -165,61 +165,16 @@ const Board = ({ socket, player, reset, roomId }) => {
     <>
       <div className="board-wrapper">
         <h2>{message}</h2>
-        <div className="board">
-          <div
-            className={"square-one " + (gameOver.current ? "disabled" : "")}
-            onClick={() => drawChoice(0, player)}
-          >
-            {board[0]}
-          </div>
-          <div
-            className={"square-two " + (gameOver.current ? "disabled" : "")}
-            onClick={() => drawChoice(1, player)}
-          >
-            {board[1]}
-          </div>
-          <div
-            className={"square-three " + (gameOver.current ? "disabled" : "")}
-            onClick={() => drawChoice(2, player)}
-          >
-            {board[2]}
-          </div>
-          <div
-            className={"square-four " + (gameOver.current ? "disabled" : "")}
-            onClick={() => drawChoice(3, player)}
-          >
-            {board[3]}
-          </div>
-          <div
-            className={"square-five " + (gameOver.current ? "disabled" : "")}
-            onClick={() => drawChoice(4, player)}
-          >
-            {board[4]}
-          </div>
-          <div
-            className={"square-six " + (gameOver.current ? "disabled" : "")}
-            onClick={() => drawChoice(5, player)}
-          >
-            {board[5]}
-          </div>
-          <div
-            className={"square-seven " + (gameOver.current ? "disabled" : "")}
-            onClick={() => drawChoice(6, player)}
-          >
-            {board[6]}
-          </div>
-          <div
-            className={"square-eight " + (gameOver.current ? "disabled" : "")}
-            onClick={() => drawChoice(7, player)}
-          >
-            {board[7]}
-          </div>
-          <div
-            className={"square-nine " + (gameOver.current ? "disabled" : "")}
-            onClick={() => drawChoice(8, player)}
-          >
-            {board[8]}
-          </div>
+        <div className={"board " + (gameOver.current ? "disabled" : "")}>
+          <div onClick={() => drawChoice(0, player)}>{board[0]}</div>
+          <div onClick={() => drawChoice(1, player)}>{board[1]}</div>
+          <div onClick={() => drawChoice(2, player)}>{board[2]}</div>
+          <div onClick={() => drawChoice(3, player)}>{board[3]}</div>
+          <div onClick={() => drawChoice(4, player)}>{board[4]}</div>
+          <div onClick={() => drawChoice(5, player)}>{board[5]}</div>
+          <div onClick={() => drawChoice(6, player)}>{board[6]}</div>
+          <div onClick={() => drawChoice(7, player)}>{board[7]}</div>
+          <div onClick={() => drawChoice(8, player)}>{board[8]}</div>
         </div>
       </div>
       {gameOver.current && (
