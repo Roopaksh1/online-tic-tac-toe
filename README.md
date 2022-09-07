@@ -1,7 +1,7 @@
 <div align=center>
 <h1 align=center>TIC TAC TOE</h1>
-<p>This project is made during summer training. This was the final project I had to make an online tic tac toe game.<p>
-<!--<a href=><img src=https://img.shields.io/badge/%F0%9F%91%89-LIVE-success></a>-->
+<p>This project is made during summer training. This was the final project I had to make an online tic tac toe game.<br> <b>Live 👇</b><p>
+<a href=http://52.38.88.30:1234><img src=https://img.shields.io/badge/Amazon_AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white>
 </div>
 
 ![image](https://user-images.githubusercontent.com/72032743/188689133-4bb37d49-abc4-43b0-8469-f7233d3e22b8.png)
