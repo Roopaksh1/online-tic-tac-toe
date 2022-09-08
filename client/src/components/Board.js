@@ -129,6 +129,10 @@ const Board = ({ socket, player, reset, roomId }) => {
   // Game logic
 
   // Socket.io events
+  if (gameOver.current) {
+    socket.emit("game-over", roomId);
+  }
+
   socket.on("your-turn", (index, choice) => insertOnBoard(index, choice));
 
   socket.on("left-game", () => {

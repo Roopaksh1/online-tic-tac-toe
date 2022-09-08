@@ -1,21 +1,23 @@
-const rooms = [];
-const maxRooms = 10;
+const rooms = {
+  maxRoom: 1000,
+  roomSize: 2,
+};
 
 const onConnection = (socket, io) => {
-
   socket.on("create-room", () => {
-    let roomId = Math.floor(Math.random() * maxRooms).toString();
-    while (rooms.includes(roomId)) {
-      roomId = Math.floor(Math.random() * maxRooms).toString();
+    let roomId = Math.floor(Math.random() * rooms.maxRoom + 1).toString();
+    while (roomId in rooms) {
+      roomId = Math.floor(Math.random() * rooms.maxRoom + 1).toString();
     }
-    rooms.push(roomId);
+    rooms[roomId] = 1;
     socket.join(roomId);
     socket.emit("unique-id", roomId);
   });
 
-  socket.on("join-room", (roomId) => {
-    if (rooms.includes(roomId)) {
+  socket.on("join-room", async (roomId) => {
+    if (roomId in rooms && rooms[roomId] < 2) {
       socket.join(roomId);
+      rooms[roomId] = 2;
       io.to(roomId).emit("start-game");
     } else {
       socket.emit("wrong-room-id");
@@ -41,6 +43,10 @@ const onConnection = (socket, io) => {
 
   socket.on("rematch-rejecting", (roomId) => {
     socket.to(roomId).emit("rematch-rejected");
+  });
+
+  socket.on("game-over", (roomId) => {
+    delete rooms[roomId];
   });
 };
 
