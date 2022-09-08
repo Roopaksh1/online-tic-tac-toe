@@ -5,23 +5,17 @@ import LoginScreen from "./pages/LoginScreen";
 import { io } from "socket.io-client";
 import NetworkAlert from "./shared/widgets/NetworkAlert";
 import { useState } from "react";
-const socket = io("http://localhost:1234");
+const socket = io(process.env.REACT_APP_SERVER);
 
 function App() {
   const [token, setToken] = useToken();
   const [alert, setAlert] = useState(false);
 
-  socket.on("connect", () => {
-    setAlert(false);
-  });
+  socket.on("connect", () => setAlert(false));
 
-  socket.on("connect_error", () => {
-    setAlert(true);
-  });
+  socket.on("connect_error", () => setAlert(true));
 
-  socket.on("disconnect", () => {
-    setAlert(true);
-  });
+  socket.on("disconnect", () => setAlert(true));
 
   return (
     <>

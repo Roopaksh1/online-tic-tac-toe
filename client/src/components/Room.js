@@ -15,7 +15,7 @@ const Room = ({ socket }) => {
     if (socket.connected) {
       socket.emit("create-room");
       setPlayer("X");
-    } 
+    }
   };
 
   const joinRoom = () => {
@@ -39,13 +39,9 @@ const Room = ({ socket }) => {
     setRoomId(roomId);
   });
 
-  socket.on("wrong-room-id", () => {
-    setRoomError("Invalid Room ID");
-  });
+  socket.on("wrong-room-id", () => setRoomError("Invalid Room ID"));
 
-  socket.on("start-game", () => {
-    setStartGame(true);
-  });
+  socket.on("start-game", () => setStartGame(true));
 
   return (
     <>

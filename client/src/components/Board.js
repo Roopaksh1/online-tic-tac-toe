@@ -129,9 +129,7 @@ const Board = ({ socket, player, reset, roomId }) => {
   // Game logic
 
   // Socket.io events
-  socket.on("your-turn", (index, choice) => {
-    insertOnBoard(index, choice);
-  });
+  socket.on("your-turn", (index, choice) => insertOnBoard(index, choice));
 
   socket.on("left-game", () => {
     setMessage("Opponent left the game . . .");
@@ -140,6 +138,7 @@ const Board = ({ socket, player, reset, roomId }) => {
 
   socket.on("rematch-offer", () => {
     setMessage("Rematch offered");
+    rematchDisabled.current = true;
     setRematchFlag(true);
   });
 
@@ -150,7 +149,6 @@ const Board = ({ socket, player, reset, roomId }) => {
 
   socket.on("rematch-rejected", () => {
     setMessage("Opponent declined the offer.");
-    rematchDisabled.current = true;
   });
   // Socket.io events
 
