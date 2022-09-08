@@ -9,12 +9,12 @@
 ## Features
 
 - User login system.
-- Rematch feature
+- Rematch feature.
+- Chat with opponent.
 
 #### Features I Am Working On
 
 - Store records: Matches Played | Win | Draw | Lose
-- Chat
 - Offline Mode
 
 ## Built With
