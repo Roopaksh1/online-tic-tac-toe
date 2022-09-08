@@ -1,27 +1,21 @@
 <div align=center>
 <h1 align=center>TIC TAC TOE</h1>
-<p>This project is made during summer training. This was the final project I had to make an online tic tac toe game.<br> <b>Live 👇</b><p>
-<a href=http://52.38.88.30:1234><img src=https://img.shields.io/badge/Amazon_AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white>
+<p>Play Tic-Tac-Toe against other users by creating a room and sharing that room ID<br> <b>Live 👇</b><p>
+<a href=http://43.205.72.215:1234/><img src=https://img.shields.io/badge/Amazon_AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white>
 </div>
 
-![image](https://user-images.githubusercontent.com/72032743/188689133-4bb37d49-abc4-43b0-8469-f7233d3e22b8.png)
+![image](https://user-images.githubusercontent.com/72032743/189187659-4ed40cd6-0da8-4e22-b40f-6c0494e09ead.png)
 
 ## Features
 
 - User login system.
-- Play against other users by sharing a roomID.
 - Rematch feature
 
 #### Features I Am Working On
 
 - Store records: Matches Played | Win | Draw | Lose
 - Chat
-- Exit the ongoing game
 - Offline Mode
-
-#### Issues
-
-- Doesn't notify when user is disconnected.
 
 ## Built With
 
@@ -29,6 +23,19 @@
 
 
 ## Installation
+
+- To run this project, you will need to add the following environment variables to your .env file
+
+```
+Inside Server
+DB_URL
+PORT
+
+Inside Client
+REACT_APP_SERVER
+REACT_APP_LOGIN
+REACT_APP_SIGNUP
+```
 
 - Clone the Repo
 
@@ -69,7 +76,7 @@ npm start
 ![image](https://user-images.githubusercontent.com/72032743/188688685-fede6037-70d3-4896-8e44-aa3e84f0b15c.png)
 
 - Create a Room
-![image](https://user-images.githubusercontent.com/72032743/188688799-0749f6ac-19d3-4bd5-8fcb-58ccce64989c.png)
+![image](https://user-images.githubusercontent.com/72032743/189187557-d9ef6628-58b6-4fad-8462-1c96d6e542c4.png)
 ![image](https://user-images.githubusercontent.com/72032743/188688856-9c7caeac-ae7f-4f81-b673-fab5dec96ec0.png)
 
 - Join room from different tab with same roomID
