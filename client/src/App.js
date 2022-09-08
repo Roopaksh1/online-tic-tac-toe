@@ -1,10 +1,10 @@
 import "./App.css";
 import useToken from "./hooks/useToken";
-import GameScreen from "./pages/GameScreen";
 import LoginScreen from "./pages/LoginScreen";
 import { io } from "socket.io-client";
 import NetworkAlert from "./shared/widgets/NetworkAlert";
 import { useState } from "react";
+import Home from "./pages/Home";
 const socket = io(process.env.REACT_APP_SERVER);
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
     <>
       {token ? (
         <>
-          <GameScreen setToken={setToken} socket={socket} />
+          <Home setToken={setToken} socket={socket}/>
           {alert && <NetworkAlert />}
         </>
       ) : (

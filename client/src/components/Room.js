@@ -54,7 +54,7 @@ const Room = ({ socket }) => {
         />
       )}
       {!startGame && roomCreate && (
-        <p>
+        <p className="waiting-msg">
           Waiting for player to join &nbsp;
           <i className="fa-solid fa-spinner fa-spin"></i>
           <br /> Room id: {roomId}

@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import Button from "@mui/material/Button";
-import { Alert, AlertTitle } from "@mui/material";
 
 const Board = ({ socket, player, reset, roomId }) => {
   const [board, setBoard] = useState(["", "", "", "", "", "", "", "", ""]);
@@ -108,6 +107,7 @@ const Board = ({ socket, player, reset, roomId }) => {
     if (socket.connected) {
       socket.emit("rematch", roomId);
       setMessage("Rematch offer sent . . .");
+      rematchDisabled.current = true;
     }
   };
 
@@ -183,7 +183,7 @@ const Board = ({ socket, player, reset, roomId }) => {
         </div>
       )}
       {rematchFlag && (
-        <div className="rematch-btn">
+        <div className="rematch-btns">
           <Button
             variant="contained"
             color="success"

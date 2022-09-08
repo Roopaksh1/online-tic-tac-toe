@@ -1,32 +1,37 @@
 .game-screen {
   width: 100vw;
-  height: 100vh;
+  height: 91vh;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.board-wrapper {
+  height: 60rem;
 }
 
 .board-wrapper h2 {
   text-align: center;
   padding: 2rem;
   font-size: 3rem;
+  margin-bottom: 3rem;
 }
 
 .board {
-  width: 60rem;
+  width: 45rem;
   display: flex;
   flex-wrap: wrap;
 }
 
 .board div {
-  width: 20rem;
-  height: 20rem;
+  width: 15rem;
+  height: 15rem;
   background-color: #edf2f4;
   border: black solid 1px;
   box-sizing: border-box;
   font-size: 10rem;
   text-align: center;
-  line-height: 20rem;
+  line-height: 15rem;
   cursor: context-menu;
 }
 
@@ -65,7 +70,7 @@
   top: -2rem;
 }
 
-p {
+.waiting-msg {
   font-size: 3rem;
   text-align: center;
 }
@@ -82,17 +87,17 @@ p {
   font-size: 2rem
 }
 
-.rematch-btn button {
+.rematch-btns button {
   position: absolute;
   font-size: 1.5rem;
 }
 
 .accept-btn {
-  top: 5rem;
-  left: 40rem;
+  top: 18%;
+  left: 28%;
 }
 
 .reject-btn {
-  top: 5rem;
-  left: 83rem;
+  top: 18%;
+  left: 52%;
 }

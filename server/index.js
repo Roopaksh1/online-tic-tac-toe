@@ -12,7 +12,7 @@ const io = new Server(httpServer, {
   },
 });
 
-app.use(express.static("../client/build"));
+app.use(express.static("../build"));
 app.use(express.json());
 app.use(cors());
 app.use("/", require("./routes/user"));
