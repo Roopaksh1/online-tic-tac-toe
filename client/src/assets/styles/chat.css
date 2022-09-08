@@ -1,0 +1,25 @@
+.chatbox-wrapper {
+  position: absolute;
+  right: 5rem;
+  bottom: 5rem;
+}
+
+.chatbox {
+  height: 40rem;
+  width: 29rem;
+  background-color: white;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  overflow: auto;
+}
+
+.chatbox-wrapper input {
+  margin-right: 2rem;
+  padding: 1.5rem;
+}
+
+.chatbox p {
+  margin-bottom: 1rem;
+  border: 1px solid black;
+}

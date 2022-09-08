@@ -1,7 +1,7 @@
 import "../assets/styles/gameScreen.css";
 import Room from "../components/Room";
 
-const GameScreen = ({ setToken, socket }) => {
+const RoomScreen = ({ setToken, socket }) => {
   return (
     <div className="game-screen">
       <Room socket={socket} />
@@ -9,4 +9,4 @@ const GameScreen = ({ setToken, socket }) => {
   );
 };
 
-export default GameScreen;
+export default RoomScreen;

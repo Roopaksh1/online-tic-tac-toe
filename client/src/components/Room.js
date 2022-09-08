@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Board from "../components/Board";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
+import Game from "../pages/Game";
 
 const Room = ({ socket }) => {
   const [roomId, setRoomId] = useState(0);
@@ -46,7 +46,7 @@ const Room = ({ socket }) => {
   return (
     <>
       {startGame && (
-        <Board
+        <Game
           socket={socket}
           player={player}
           reset={reset}

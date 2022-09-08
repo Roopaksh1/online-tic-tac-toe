@@ -48,6 +48,10 @@ const onConnection = (socket, io) => {
   socket.on("game-over", (roomId) => {
     delete rooms[roomId];
   });
+
+  socket.on("send-msg", (roomId, message) => {
+    socket.to(roomId).emit("msg-sent", message);
+  })
 };
 
 module.exports = onConnection;
